@@ -21,6 +21,7 @@ function loadDvds() {
         url: 'https://tsg-dvds.herokuapp.com/dvds',
         success: function (dvdArray) {
             var dvdRows = $('#contentRows');
+            dvdRows.empty();
             $.each(dvdArray, function(index, dvd) {
                 var title = dvd.title;
                 var releaseDate = dvd.releaseYear;
@@ -66,7 +67,41 @@ function showEdit(id) {
 }
 
 function editDvd() {
-    
+    $.ajax({
+        type: 'PUT',
+        url: 'https://tsg-dvds.herokuapp.com/dvd/' + $('#editId').val(),
+        dataType: 'json',
+        data: JSON.stringify({
+            id: $('#editId').val(),
+            title: $('#editTitle').val(),
+            releaseYear: $('#editReleaseYear').val(),
+            director: $('#editDirector').val(),
+            rating: $('#editRating').val(),
+            notes: $('#editNotes').val()
+        }),
+        
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        
+        success: function() {
+            $('#errorMessage').empty();
+            hideExceptFor('main');
+            loadDvds();
+        },
+        error: function() {
+            alert(JSON.stringify({
+                id: $('#editId').val(),
+                title: $('#editTitle').val(),
+                releaseYear: $('#editReleaseYear').val(),
+                director: $('#editDirector').val(),
+                rating: $('#editRating').val(),
+                notes: $('#editNotes').val()
+            }));
+            addError('Error calling web service.  Please try again later.');
+        }
+    });
 }
 
 function addError(msg) {
