@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>DVD Library</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    </head>
+    <body>
+        <div class="container">
+            <div class="d-flex mt-3">
+                <div class="col">
+                    <button class="btn btn-primary">Create DVD</button>
+                </div>
+                <div class="col justify-self-right">
+                    <button class="btn btn-primary">Search</button>
+                </div>
+                <div class="col">
+                    <select class="custom-select">
+                        <option>Title</option>
+                        <option>Release Date</option>
+                        <option>Director</option>
+                        <option>Rating</option>
+                    </select>
+                </div>
+                <div class="col">
+                    <input type="text"
+                           class="form-control">
+                </div>
+            </div>
+            
+            <hr>
+            
+            <ul class="list-group" id="errorMessage"></ul>
+            
+            <div id="dvdList">
+                <table id="dvdTable" class="table table-hover table-bordered text-center">
+                    <thead>
+                        <tr>
+                            <th width="30%">Title</th>
+                            <th width="20%">Release Date</th>
+                            <th width="15%">Director</th>
+                            <th width="15%">Rating</th>
+                            <th width="10%"></th>
+                            <th width="10%"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="contentRows"></tbody>
+                </table>
+            </div>
+            
+            
+        </div>
+        
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script src="js/home.js"></script>
+    </body>
+</html>
