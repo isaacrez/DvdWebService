@@ -5,7 +5,7 @@ $(document).ready(function() {
 });
 
 function hideExceptFor(name) {
-    hideables = ['main', 'edit'];
+    hideables = ['main', 'edit', 'add'];
     $.each(hideables, function(index, value) {
         if (value !== name) {
             $('.' + value).hide();
@@ -67,34 +67,46 @@ function showEdit(id) {
 }
 
 function editDvd() {
-    $.ajax({
-        type: 'PUT',
-        url: 'https://tsg-dvds.herokuapp.com/dvd/' + $('#editId').val(),
-        contentType: 'application/json',
-        data: JSON.stringify({
-            id: $('#editId').val(),
-            title: $('#editTitle').val(),
-            releaseYear: $('#editReleaseYear').val(),
-            director: $('#editDirector').val(),
-            rating: $('#editRating').val(),
-            notes: $('#editNotes').val()
-        }),
-        
-        success: function() {
-            $('#errorMessage').empty();
-            hideExceptFor('main');
-            loadDvds();
-        },
-        
-        error: function(xhr, status, error) {
-            console.log(xhr.status);
-            console.log(status);
-            console.log(error);
-            console.log(this.url);
-            console.log(this.data);
-            addError('Error calling web service.  Please try again later.');
+    if (isValidInput($('#editForm').find('input'))) {
+        $.ajax({
+            type: 'PUT',
+            url: 'https://tsg-dvds.herokuapp.com/dvd/' + $('#editId').val(),
+            contentType: 'application/json',
+            data: JSON.stringify({
+                id: $('#editId').val(),
+                title: $('#editTitle').val(),
+                releaseYear: $('#editReleaseYear').val(),
+                director: $('#editDirector').val(),
+                rating: $('#editRating').val(),
+                notes: $('#editNotes').val()
+            }),
+
+            success: function() {
+                $('#errorMessage').empty();
+                hideExceptFor('main');
+                loadDvds();
+            },
+
+            error: function(xhr, status, error) {
+                addError('Error calling web service.  Please try again later.');
+            }
+        });
+    }
+}
+
+function isValidInput(input) {
+    var isValid = true;
+    $('errorMessage').empty();
+    
+    input.each(function() {
+        if (!this.validity.valid) {
+            var errorField = $('label[for=' + this.id + ']').text();
+            addError(errorField + ' ' + this.validationMessage);
+            isValid = false;
         }
-    });
+    })
+    
+    return isValid;
 }
 
 function addError(msg) {
