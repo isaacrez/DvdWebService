@@ -70,7 +70,7 @@ function editDvd() {
     $.ajax({
         type: 'PUT',
         url: 'https://tsg-dvds.herokuapp.com/dvd/' + $('#editId').val(),
-        dataType: 'json',
+        contentType: 'application/json',
         data: JSON.stringify({
             id: $('#editId').val(),
             title: $('#editTitle').val(),
@@ -80,25 +80,18 @@ function editDvd() {
             notes: $('#editNotes').val()
         }),
         
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        
         success: function() {
             $('#errorMessage').empty();
             hideExceptFor('main');
             loadDvds();
         },
-        error: function() {
-            alert(JSON.stringify({
-                id: $('#editId').val(),
-                title: $('#editTitle').val(),
-                releaseYear: $('#editReleaseYear').val(),
-                director: $('#editDirector').val(),
-                rating: $('#editRating').val(),
-                notes: $('#editNotes').val()
-            }));
+        
+        error: function(xhr, status, error) {
+            console.log(xhr.status);
+            console.log(status);
+            console.log(error);
+            console.log(this.url);
+            console.log(this.data);
             addError('Error calling web service.  Please try again later.');
         }
     });
