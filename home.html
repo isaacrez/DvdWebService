@@ -156,7 +156,100 @@ and open the template in the editor.
                 </form>
             </div>
             
-           
+            <div class="add">
+                <form role="form" id="addForm">
+                    <div class="row mb-3">
+                        <label for="addTitle" class="col-md-2 control-label">
+                            Dvd Title:
+                        </label>
+                        
+                        <div class="col-md-10">
+                            <input type="text"
+                                   class="form-control"
+                                   id="addTitle"
+                                   required>
+                        </div>
+                    </div>
+                    
+                    <div class="row mb-3">
+                        <label for="addReleaseYear" class="col-md-2 control-label">
+                            Release Year:
+                        </label>
+                        
+                        <div class="col-md-10">
+                            <input type="text"
+                                   pattern="[1-9][0-9]{3}"
+                                   class="form-control"
+                                   id="addReleaseYear"
+                                   required>
+                        </div>
+                    </div>
+                    
+                    <div class="row mb-3">
+                        <label for="addDirector" class="col-md-2 control-label">
+                            Director:
+                        </label>
+                        
+                        <div class="col-md-10">
+                            <input type="text"
+                                   class="form-control"
+                                   id="addDirector"
+                                   required>
+                        </div>
+                    </div>
+                    
+                    <div class="row mb-3">
+                        <label for="addRating" class="col-md-2 control-label">
+                            Director:
+                        </label>
+                        
+                        <div class="col-md-10">
+                            <select type="text"
+                                   class="form-select"
+                                   id="addRating"
+                                   required>
+                                <option>G</option>
+                                <option>PG</option>
+                                <option>PG-13</option>
+                                <option>R</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="row mb-3">
+                        <label for="addNotes" class="col-md-2 control-label">
+                            Notes:
+                        </label>
+                        
+                        <div class="col-md-10">
+                            <textarea class="form-control"
+                                    rows="5"
+                                    id="addNotes"></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex mb-3 justify-content-end">
+                        <input type="hidden" id="addId">
+                        <div class="mx-3">
+                            <button type="button"
+                                    id="addCancelButton"
+                                    class="btn btn-danger"
+                                    onclick="hideExceptFor('main')">
+                                        Cancel
+                            </button>
+                        </div>
+                        <div>
+                            <button type="button"
+                                id="updateButton"
+                                class="btn btn-success"
+                                onclick="addDvd()">
+                                    Update
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            
         </div>
         
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
