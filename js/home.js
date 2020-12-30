@@ -5,6 +5,7 @@ $(document).ready(function() {
 });
 
 function hideExceptFor(name) {
+    $('#errorMessage').empty();
     hideables = ['main', 'edit', 'add'];
     $.each(hideables, function(index, value) {
         if (value !== name) {
@@ -33,8 +34,8 @@ function loadDvds() {
                 entry += '<td>' + releaseDate + '</td>';
                 entry += '<td>' + director + '</td>';
                 entry += '<td>' + rating + '</td>';
-                entry += '<td><button class="btn btn-primary" onclick="showEdit(' + dvd.id + ')">Edit</button></td>';
-                entry += '<td><button class="btn btn-danger">Delete</button></td>';
+                entry += '<td><div class="d-flex justify-content-center"><button class="btn btn-primary mx-1" onclick="showEdit(' + dvd.id + ')">Edit</button>';
+                entry += '<button class="btn btn-danger mx-1">Delete</button></div></td>';
                 entry += '</tr>';
                 
                 dvdRows.append(entry);
@@ -112,6 +113,6 @@ function isValidInput(input) {
 function addError(msg) {
     $('#errorMessage')
         .append($('<li>')
-        .attr({class: 'list-group-item list-group-item-danger'})
+        .attr({class: 'list-group-item list-group-item-danger mb-1'})
         .text(msg));
 }
