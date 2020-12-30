@@ -45,8 +45,8 @@ and open the template in the editor.
             <div class="edit mt-3">
                 <h1 id="editTitleHeader">Edit Dvd:</h1>
             </div>
-            
             <h1 class="add mt-3">Create Dvd</h1>
+            <h1 class="disp mt-3" id="dispTitleHeader"></h1>
             
             <hr>
             
@@ -252,6 +252,30 @@ and open the template in the editor.
                 </form>
             </div>
             
+            <div class="disp">
+                <div class="row">
+                    <b class="col-sm-3">Release Year</b>
+                    <p id="dispReleaseYear" class="col"></p>
+                </div>
+                
+                <div class="row">
+                    <b class="col-sm-3">Director</b>
+                    <p id="dispDirector" class="col"></p>
+                </div>
+                
+                <div class="row">
+                    <b class="col-sm-3">Rating</b>
+                    <p id="dispRating" class="col"></p>
+                </div>
+                
+                <div class="row justify-content-start">
+                    <b class="col-sm-3">Notes</b>
+                    <p id="dispNotes" class="col"></p>
+                </div>
+                
+                <button class="btn btn-primary"
+                    onclick="hideExceptFor('main')">Back</button>
+            </div>
         </div>
         
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->

@@ -6,14 +6,14 @@ $(document).ready(function() {
 
 function hideExceptFor(name) {
     $('#errorMessage').empty();
-    hideables = ['main', 'edit', 'add'];
+    hideables = ['main', 'edit', 'add', 'disp'];
     $.each(hideables, function(index, value) {
         if (value !== name) {
             $('.' + value).hide();
         } else {
             $('.' + value).show();
         }
-    })
+    });
 }
 
 function loadDvds() {
@@ -30,7 +30,7 @@ function loadDvds() {
                 var rating = dvd.rating;
                 
                 var entry = '<tr>';
-                entry += '<td>' + title + '</td>';
+                entry += '<td><button class="btn text-primary" onclick="showDvdById(' + dvd.id + ')">' + title + '</button></td>';
                 entry += '<td>' + releaseDate + '</td>';
                 entry += '<td>' + director + '</td>';
                 entry += '<td>' + rating + '</td>';
@@ -80,6 +80,24 @@ function loadFilteredDvds() {
     } else {
         addError('Both "Search Category" and "Search Term" are required');
     }
+}
+
+function showDvdById(id) {
+    $.ajax({
+        type: 'GET',
+        url: 'https://tsg-dvds.herokuapp.com/dvd/' + id,
+        success: function (dvd) {
+            hideExceptFor('disp');
+            $('#dispTitleHeader').text(dvd.title);
+            $('#dispReleaseYear').text(dvd.releaseYear);
+            $('#dispDirector').text(dvd.director);
+            $('#dispRating').text(dvd.rating);
+            $('#dispNotes').text(dvd.notes);
+        },
+        error: function() {
+            addError('Could not communicate with database.  Try again later.');
+        }
+    });
 }
 
 function showEdit(id) {
