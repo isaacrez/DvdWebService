@@ -24,21 +24,7 @@ function loadDvds() {
             var dvdRows = $('#contentRows');
             dvdRows.empty();
             $.each(dvdArray, function(index, dvd) {
-                var title = dvd.title;
-                var releaseDate = dvd.releaseYear;
-                var director = dvd.director;
-                var rating = dvd.rating;
-                
-                var entry = '<tr>';
-                entry += '<td><button class="btn text-primary" onclick="showDvdById(' + dvd.id + ')">' + title + '</button></td>';
-                entry += '<td>' + releaseDate + '</td>';
-                entry += '<td>' + director + '</td>';
-                entry += '<td>' + rating + '</td>';
-                entry += '<td><div class="d-flex justify-content-center"><button class="btn btn-primary mx-1" onclick="showEdit(' + dvd.id + ')">Edit</button>';
-                entry += '<button class="btn btn-danger mx-1">Delete</button></div></td>';
-                entry += '</tr>';
-                
-                dvdRows.append(entry);
+                dvdRows.append(getDvdEntry(dvd));
             });
         },
         error: function() {
@@ -56,21 +42,7 @@ function loadFilteredDvds() {
                 var dvdRows = $('#contentRows');
                 dvdRows.empty();
                 $.each(dvdArray, function(index, dvd) {
-                    var title = dvd.title;
-                    var releaseDate = dvd.releaseYear;
-                    var director = dvd.director;
-                    var rating = dvd.rating;
-
-                    var entry = '<tr>';
-                    entry += '<td>' + title + '</td>';
-                    entry += '<td>' + releaseDate + '</td>';
-                    entry += '<td>' + director + '</td>';
-                    entry += '<td>' + rating + '</td>';
-                    entry += '<td><div class="d-flex justify-content-center"><button class="btn btn-primary mx-1" onclick="showEdit(' + dvd.id + ')">Edit</button>';
-                    entry += '<button class="btn btn-danger mx-1">Delete</button></div></td>';
-                    entry += '</tr>';
-
-                    dvdRows.append(entry);
+                    dvdRows.append(getDvdEntry(dvd));
                 });
             },
             error: function() {
@@ -80,6 +52,24 @@ function loadFilteredDvds() {
     } else {
         addError('Both "Search Category" and "Search Term" are required');
     }
+}
+
+function getDvdEntry(dvd) {
+    var title = dvd.title;
+    var releaseDate = dvd.releaseYear;
+    var director = dvd.director;
+    var rating = dvd.rating;
+
+    var entry = '<tr>';
+    entry += '<td>' + title + '</td>';
+    entry += '<td>' + releaseDate + '</td>';
+    entry += '<td>' + director + '</td>';
+    entry += '<td>' + rating + '</td>';
+    entry += '<td><div class="d-flex justify-content-center"><button class="btn btn-primary mx-1" onclick="showEdit(' + dvd.id + ')">Edit</button>';
+    entry += '<button class="btn btn-danger mx-1" onclick="deleteDvd(' + dvd.id + ')">Delete</button></div></td>';
+    entry += '</tr>';
+    
+    return entry;
 }
 
 function showDvdById(id) {
@@ -169,6 +159,21 @@ function addDvd() {
             }
         });
     }
+}
+
+function deleteDvd(id) {
+    $.ajax({
+        type: 'DELETE',
+        url: 'https://tsg-dvds.herokuapp.com/dvd/' + id,
+        
+        success: function() {
+            onSuccessfulCrud();
+        },
+        
+        error: function() {
+            addError('Error communicating with the database; Dvd was not deleted');
+        }
+    });
 }
 
 function isValidInput(input, addErrorMsg=true) {
