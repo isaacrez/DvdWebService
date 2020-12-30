@@ -14,21 +14,32 @@ and open the template in the editor.
     <body>
         <div class="container my-3">
             <div class="main">
-                <div class="d-flex">
-                    <button class="btn btn-primary me-auto"
+                <form id="searchForm" class="d-flex">
+                    <button type="button"
+                            class="btn btn-primary me-auto"
                             onclick="hideExceptFor('add')">
                         Create DVD
                     </button>
-                    <button class="btn btn-primary mx-3">Search</button>
-                    <select class="form-select w-25 mx-3">
-                        <option>Title</option>
-                        <option>Release Date</option>
-                        <option>Director</option>
-                        <option>Rating</option>
+                    
+                    <button type="button"
+                            class="btn btn-primary mx-3"
+                            onclick="loadFilteredDvds()">
+                        Search
+                    </button>
+                    
+                    <select id="searchType" class="form-select w-25 mx-3" required>
+                        <option value="">Search Category</option>
+                        <option value="title">Title</option>
+                        <option value="year">Release Date</option>
+                        <option value="director">Director</option>
+                        <option value="rating">Rating</option>
                     </select>
+                    
                     <input type="text"
-                           class="form-control w-25 mx-3">
-                </div>
+                           id="searchString"
+                           class="form-control w-25 mx-3"
+                           required>
+                </form>
             </div>
             
             <div class="edit mt-3">

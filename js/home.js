@@ -47,6 +47,41 @@ function loadDvds() {
     });
 }
 
+function loadFilteredDvds() {
+    if (isValidInput($('#searchForm').find('select, input'), false)) {
+        $.ajax({
+            type: 'GET',
+            url: 'https://tsg-dvds.herokuapp.com/dvds/' + $('#searchType').val() + '/' + $('#searchString').val(),
+            success: function (dvdArray) {
+                var dvdRows = $('#contentRows');
+                dvdRows.empty();
+                $.each(dvdArray, function(index, dvd) {
+                    var title = dvd.title;
+                    var releaseDate = dvd.releaseYear;
+                    var director = dvd.director;
+                    var rating = dvd.rating;
+
+                    var entry = '<tr>';
+                    entry += '<td>' + title + '</td>';
+                    entry += '<td>' + releaseDate + '</td>';
+                    entry += '<td>' + director + '</td>';
+                    entry += '<td>' + rating + '</td>';
+                    entry += '<td><div class="d-flex justify-content-center"><button class="btn btn-primary mx-1" onclick="showEdit(' + dvd.id + ')">Edit</button>';
+                    entry += '<button class="btn btn-danger mx-1">Delete</button></div></td>';
+                    entry += '</tr>';
+
+                    dvdRows.append(entry);
+                });
+            },
+            error: function() {
+                addError('Could not communicate with database.  Try again later.');
+            }
+        });
+    } else {
+        addError('Both "Search Category" and "Search Term" are required');
+    }
+}
+
 function showEdit(id) {
     $.ajax({
         type: 'GET',
@@ -118,14 +153,16 @@ function addDvd() {
     }
 }
 
-function isValidInput(input) {
+function isValidInput(input, addErrorMsg=true) {
     var isValid = true;
-    $('errorMessage').empty();
+    $('#errorMessage').empty();
     
     input.each(function() {
         if (!this.validity.valid) {
             var errorField = $('label[for=' + this.id + ']').text();
-            addError(errorField + ' ' + this.validationMessage);
+            if (addErrorMsg) {
+                addError(errorField + ' ' + this.validationMessage);            
+            }
             isValid = false;
         }
     });
