@@ -162,18 +162,20 @@ function addDvd() {
 }
 
 function deleteDvd(id) {
-    $.ajax({
-        type: 'DELETE',
-        url: 'https://tsg-dvds.herokuapp.com/dvd/' + id,
-        
-        success: function() {
-            onSuccessfulCrud();
-        },
-        
-        error: function() {
-            addError('Error communicating with the database; Dvd was not deleted');
-        }
-    });
+    if (window.confirm("Are you sure you want to delete this DvD?")) {
+        $.ajax({
+            type: 'DELETE',
+            url: 'https://tsg-dvds.herokuapp.com/dvd/' + id,
+
+            success: function() {
+                onSuccessfulCrud();
+            },
+
+            error: function() {
+                addError('Error communicating with the database; Dvd was not deleted');
+            }
+        });
+    }
 }
 
 function isValidInput(input, addErrorMsg=true) {
