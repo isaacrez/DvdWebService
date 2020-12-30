@@ -83,15 +83,38 @@ function editDvd() {
             }),
 
             success: function() {
-                $('#errorMessage').empty();
-                hideExceptFor('main');
-                loadDvds();
+                onSuccessfulCrud();
             },
 
             error: function(xhr, status, error) {
                 addError('Error calling web service.  Please try again later.');
             }
         });
+    }
+}
+
+function addDvd() {
+    if (isValidInput($('#addForm').find('input'))) {
+        $.ajax({
+            type: 'POST',
+            url: 'https://tsg-dvds.herokuapp.com/dvd/',
+            contentType: 'application/json',
+            data: JSON.stringify({
+                title: $('#addTitle').val(),
+                releaseYear: $('#addReleaseYear').val(),
+                director: $('#addDirector').val(),
+                rating: $('#addRating').val(),
+                notes: $('#addNotes').val()
+            }),
+            
+            success: function() {
+                onSuccessfulCrud();
+            },
+            
+            error: function() {
+                addError('Error communicating with the database; Dvd was not added');
+            }
+        })
     }
 }
 
@@ -105,9 +128,15 @@ function isValidInput(input) {
             addError(errorField + ' ' + this.validationMessage);
             isValid = false;
         }
-    })
+    });
     
     return isValid;
+}
+
+function onSuccessfulCrud() {
+    $('#errorMessage').empty();
+    hideExceptFor('main');
+    loadDvds();
 }
 
 function addError(msg) {
