@@ -149,20 +149,30 @@ function addDvd() {
             error: function() {
                 addError('Error communicating with the database; Dvd was not added');
             }
-        })
+        });
     }
 }
 
 function isValidInput(input, addErrorMsg=true) {
     var isValid = true;
+    var errorMsgs = {
+        'ReleaseYear': 'Please enter a 4-digit year',
+        'Title': 'Please enter a movie title'
+    };
+    
     $('#errorMessage').empty();
     
     input.each(function() {
         if (!this.validity.valid) {
-            var errorField = $('label[for=' + this.id + ']').text();
             if (addErrorMsg) {
-                addError(errorField + ' ' + this.validationMessage);            
+                for (var err in errorMsgs) {
+                    if (this.id.endsWith(err)) {
+                        addError(errorMsgs[err]);
+                        break;
+                    }
+                }
             }
+
             isValid = false;
         }
     });
